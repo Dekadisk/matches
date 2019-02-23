@@ -1,4 +1,7 @@
 # matches
 
-Projet réalisé en ADA, inspiré du jeu d'allumettes (utilisé notamment dans Fort Boyard).
-Joueur vs IA, l'IA ayant différents niveaux de difficulté.
+RULES :
+There are N matchsticks available. The player against against the PC. 
+The user can pick one to three matchsticks when it's their turn to play.
+The PC does the same when it's its turn.
+The player who picks the last matchstick loses.

@@ -170,4 +170,4 @@ begin
             Put_Line("J'ai gagné !");
         end if;
 
-end Allumettes;
+end Matches;

@@ -5,25 +5,24 @@ use Ada.Integer_Text_IO;
 with Alea;
 
 --------------------------------------------------------------------------------
---  Auteur   : Julien LEONARD
---  Objectif : Permettre à l'utilisateur de jouer contre l'ordinateur au jeu de 13 allumettes, en sélectionnant le niveau de difficulté de celui-ci, ainsi que le joueur débutant la partie.
+--  Author   : Dekadisk
 --------------------------------------------------------------------------------
 
-procedure Allumettes is
+procedure Matches is
     
-    NOMBRE_ALLUMETTES_INITIAL : CONSTANT Integer := 13;
-    ALLUMETTES_PAR_PRISE_MAX : CONSTANT Integer := 3;
-    NB_LIGNES : CONSTANT Integer := 3; 
-    BLOC_COLONNES : CONSTANT Integer := 5;
+    NB_INIT_MATCHES : CONSTANT Integer := 13;
+    MX_MATCHES_PER_TURN : CONSTANT Integer := 3;
+    NB_LINES : CONSTANT Integer := 3; 
+    BLOCK_COLUMNS : CONSTANT Integer := 5;
   
     package Alea_1_max is
-            new Alea (1, ALLUMETTES_PAR_PRISE_MAX);
+            new Alea (1, MX_MATCHES_PER_TURN);
     use Alea_1_max;
 
-    Utilisateur_Va_Jouer : Boolean;
-    Niveau_Ordinateur : Character;
+    User_Will_Play : Boolean;
+    PC_Level : Character;
     Joueur_Commence : Character;
-    Nombre_Allumettes_Restantes : Integer := NOMBRE_ALLUMETTES_INITIAL;
+    Nombre_Allumettes_Restantes : Integer := NB_INIT_MATCHES;
     Nombre_Allumettes_Choisies : Integer;
     Nombre_Allumettes_Valide : Boolean;
 
@@ -32,11 +31,11 @@ begin
    -- Saisir de façon conviviale le niveau de l'ordinateur.
     
        Put("Niveau de l'ordinateur (n)aïf, (d)istrait, (r)apide ou (e)xpert ? ");
-       Get(Niveau_Ordinateur);
+       Get(PC_Level);
     
        -- Afficher le niveau de l'ordinateur.
             
-           case Niveau_Ordinateur is
+           case PC_Level is
                when 'n'|'N' =>
                    Put_Line("Mon niveau est naïf.");
                when 'd' | 'D' =>
@@ -53,9 +52,9 @@ begin
         Get(Joueur_Commence);
         
         if Joueur_Commence ='o' or Joueur_Commence = 'O' then
-            Utilisateur_Va_Jouer := True;
+            User_Will_Play := True;
         else
-            Utilisateur_Va_Jouer := False;
+            User_Will_Play := False;
         end if;
 
     -- Faire se dérouler le jeu.
@@ -64,11 +63,11 @@ begin
         
         -- Afficher les allumettes sous forme de bâtons.
         
-            for Rangee in 1..NB_LIGNES loop
+            for Rangee in 1..NB_LINES loop
                 New_Line;
                 for i in 1..Nombre_Allumettes_Restantes loop
                     Put("|");
-                    if i mod BLOC_COLONNES = 0 then
+                    if i mod BLOCK_COLUMNS = 0 then
                         Put(" ");
                     end if;
                 end loop;
@@ -80,10 +79,10 @@ begin
 
 	    loop
     
-                if not(Utilisateur_Va_Jouer) then
+                if not(User_Will_Play) then
 	
                 -- Faire choisir l'ordinateur.
-                    case Niveau_Ordinateur is
+                    case PC_Level is
                         when 'n'|'N' =>
                         -- Jouer en mode naïf.
 			-- Analyser de cette façon le mode naîf permet de rendre le code plus évolutif.
@@ -94,10 +93,10 @@ begin
 		            end loop;
                         when 'r'| 'R' =>
                         -- Jouer en mode rapide.
-                            if Nombre_Allumettes_Restantes < ALLUMETTES_PAR_PRISE_MAX then
+                            if Nombre_Allumettes_Restantes < MX_MATCHES_PER_TURN then
                                 Nombre_Allumettes_Choisies := Nombre_Allumettes_Restantes;
                             else
-                                Nombre_Allumettes_Choisies := ALLUMETTES_PAR_PRISE_MAX;
+                                Nombre_Allumettes_Choisies := MX_MATCHES_PER_TURN;
                             end if;
                         when 'd' | 'D' =>
                         -- Jouer en mode distrait.
@@ -130,8 +129,8 @@ begin
 
                 -- Examiner le nombre d'allumettes prises.
             
-	            if Niveau_Ordinateur = 'd' or Niveau_Ordinateur = 'D' or Utilisateur_Va_Jouer then
-                        if Nombre_Allumettes_Choisies > ALLUMETTES_PAR_PRISE_MAX then
+	            if PC_Level = 'd' or PC_Level = 'D' or User_Will_Play then
+                        if Nombre_Allumettes_Choisies > MX_MATCHES_PER_TURN then
                             Put_Line("La prise est limitée à 3 allumettes maximum !");
                             Nombre_Allumettes_Valide := False;
                         elsif Nombre_Allumettes_Choisies <= 0 then
@@ -157,14 +156,14 @@ begin
         
             Nombre_Allumettes_Restantes := Nombre_Allumettes_Restantes - Nombre_Allumettes_Choisies;
 	
-        Utilisateur_Va_Jouer := not(Utilisateur_Va_Jouer);
+        User_Will_Play := not(User_Will_Play);
         
         exit when Nombre_Allumettes_Restantes = 0;
     end loop;
 
     -- Afficher le gagnant.
     
-        if Utilisateur_Va_Jouer then
+        if User_Will_Play then
     	    New_Line;
 	    Put_Line("Vous avez gagné !");
         else

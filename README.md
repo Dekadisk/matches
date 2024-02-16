@@ -2,7 +2,5 @@
 
 *Ever watched [Fort Boyard](https://en.wikipedia.org/wiki/Fort_Boyard_(game_show))?*
 
-RULES :
-N matchsticks are available. The user plays against the PC, and can pick one to three matchsticks when it's their turn to play.
-The PC does the same when it's its turn.
-The player who picks the last matchstick loses.
+## RULES:
+In this game, a single player competes against the computer, taking turns to choose one to three matchsticks from a total of N. The player who picks the last matchstick is the loser.

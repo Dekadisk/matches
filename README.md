@@ -1,5 +1,3 @@
-# Matches
-
 *Ever watched [Fort Boyard](https://en.wikipedia.org/wiki/Fort_Boyard_(game_show))?*
 
 ## RULES :
